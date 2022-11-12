@@ -1,0 +1,20 @@
+<script> 
+    export let size = ""
+    export let type = ""
+</script>
+<!-- Themify Icons -->
+<span class="icon {type ? `is-${type}` : ''} {size ? `is-${size}` : ''}">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17" height="17" viewBox="0 0 17 17">
+        <g>
+        </g>
+            <path d="M16.354 5.075l-7.855 7.854-7.853-7.854 0.707-0.707 7.145 7.146 7.148-7.147 0.708 0.708z" fill="#000000" />
+        </svg>       
+</span>
+
+
+<style> 
+svg {
+    width: 100%;
+    height: 100%;
+}
+</style>

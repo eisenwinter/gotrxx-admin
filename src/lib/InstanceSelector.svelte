@@ -13,7 +13,6 @@
         title: "",
         content: "",
     };
-
     register()
     async function setInstance() {
         loadingIndicator.set(true);
@@ -25,13 +24,13 @@
                 oidcSettings: {
                     authority: url,
                     client_id: client_id,
-                    redirect_uri: `${window.location.origin}/oidc-callback`,
+                    redirect_uri: `${window.location.origin}${import.meta.env.BASE_URL}#/oidc-callback`,
                     response_type: "code",
                     scope: "offline_access", //refresh tokens
                     filterProtocolClaims: true,
                     loadUserInfo: false,
                     automaticSilentRenew: true,
-                    silent_redirect_uri: `${window.location.origin}/silent-renew`
+                    silent_redirect_uri: `${window.location.origin}${import.meta.env.BASE_URL}#/silent-renew`
                 },
             };
 
@@ -43,6 +42,7 @@
         }
         loadingIndicator.set(false)
     }
+
 </script>
 
 <section class="section">

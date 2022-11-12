@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gh-pages": "vite --config vite.ghp.config.js build && npx gh-pages -d dist"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "autoprefixer": "^10.4.8",
     "bulma": "^0.9.4",
+    "gh-pages": "^4.0.0",
     "sass": "^1.54.9",
     "svelte": "^3.44.0",
     "svelte-preprocess": "^4.10.7",

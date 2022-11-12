@@ -9,7 +9,7 @@ import {
     oidcStore,
     settingStore
 } from "../store"
-
+import {replace} from 'svelte-spa-router'
 let userManager = null
 
 const setupUserManager = (settings) => {
@@ -43,16 +43,6 @@ const setupUserManager = (settings) => {
             }
         })
     })
-    // userManager.events.addUserSessionChanged(() => {
-    //     console.log('session changed')
-    // })
-    // userManager.events.addUserSignedIn(() => {
-    //     console.log('user signed in')
-    // })
-    // userManager.events.addUserSignedOut(() => {
-    //     console.log('user signed out')
-    // })
-
     return userManager
 }
 
@@ -61,7 +51,7 @@ settingStore.subscribe(n => {
     oidcStore.update(d => {
         if (n.oidcSettings != null) {
             setupUserManager(n.oidcSettings)
-            if (!d.isAuthenticated && window.location.pathname != "/oidc-callback") {
+            if (!d.isAuthenticated && window.location.hash != '#/oidc-callback') {
                 userManager.signinRedirect()
             }
         }
@@ -88,6 +78,21 @@ const logout = async () => {
             scopes: null
         }
     })
+    replace('/')
+}
+
+const callback = () => {
+    if (!get(oidcStore).isAuthenticated && get(settingStore).oidcSettings) {
+        const userManager = setupUserManager(get(settingStore).oidcSettings)
+        if (userManager) {
+            userManager.signinRedirectCallback().then(function (user) {
+                window.location.replace(`${import.meta.env.BASE_URL}`)
+            }).catch(err => {
+                //proper error handling
+                console.log('oidc-callback', err)
+            })
+        }
+    }
 }
 
 const parseToken = (token) => {
@@ -100,25 +105,9 @@ const parseToken = (token) => {
     return JSON.parse(jsonPayload);
 };
 
-if (window.location.pathname === "/oidc-callback") {
-    if (!get(oidcStore).isAuthenticated && get(settingStore).oidcSettings) {
-        const userManager = setupUserManager(get(settingStore).oidcSettings)
-        if (userManager) {
-            userManager.signinRedirectCallback().then(function (user) {
-                window.location.replace("/")
-            }).catch(err => {
-                //proper error handling
-                console.log(err)
-            })
-        }
-    }
-
-
-}
-
-
 export {
     register,
     logout,
-    login
+    login,
+    callback
 };

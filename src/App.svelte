@@ -1,6 +1,6 @@
 <script>
-	import dayjs from "dayjs"
-
+	import dayjs from "dayjs";
+	import {replace} from 'svelte-spa-router'
 	import NavBar from "./lib/NavBar.svelte";
 	import FeedbackBar from "./lib/FeedbackBar.svelte";
 	import _ from "./styles/setup.sass";
@@ -13,7 +13,7 @@
 	let instanceUrl = "";
 	let instanceClientId = "";
 
-	let expires = null
+	let expires = null;
 	let signedIn = false;
 	settingStore.subscribe((v) => {
 		if (v.instanceUrl !== null) {
@@ -24,7 +24,7 @@
 	});
 	oidcStore.subscribe((v) => {
 		signedIn = v.isAuthenticated;
-		expires = dayjs.unix(v.accessTokenExpires).format('YYYY-MM-DD HH:mm')
+		expires = dayjs.unix(v.accessTokenExpires).format("YYYY-MM-DD HH:mm");
 	});
 	let isLoading = false;
 	loadingIndicator.subscribe((v) => {
@@ -50,30 +50,33 @@
 		instanceUrl = "";
 		instanceClientId = "";
 		instanceSet = false;
-		window.location.replace("/")
+		replace(`${import.meta.env.BASE_URL}`)
 	};
+	let isOidcPage =
+		window.location.hash == "#/oidc-callback" ||
+		window.location.hash != "#/silent-renew";
 </script>
 
 <main class={isLoading ? "is-blured" : ""}>
 	{#if instanceSet}
-		<NavBar signedIn={signedIn} instanceUrl={instanceUrl} />
+		<NavBar {signedIn} {instanceUrl} />
 		<div class="container">
 			<div class="section feedback-bar">
 				<FeedbackBar />
 			</div>
 		</div>
-		{#if signedIn}
-		<div class="container">
-			<Router {routes} />
-		</div>
+		{#if signedIn || isOidcPage}
+			<div class="container">
+				<Router {routes} />
+			</div>
 		{/if}
 		<footer class="footer-line">
 			<div class="has-text-centered block">
 				<strong>Authenticated</strong>
 				{signedIn}
 				{#if signedIn}
-				- <strong>Expires</strong>
-				{expires}
+					- <strong>Expires</strong>
+					{expires}
 				{/if}
 				- <strong>URL</strong>
 				{instanceUrl} - <strong>Client ID</strong>
@@ -88,6 +91,7 @@
 {#if isLoading}
 	<LoadingIndicator />
 {/if}
+
 
 <style lang="sass">
 .feedback-bar

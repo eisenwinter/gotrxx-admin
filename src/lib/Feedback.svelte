@@ -70,8 +70,7 @@
 </div>
 {/if}
 
-<style lang="sass">#first line fix for now 
-.progress-sticky
+<style lang="sass">.progress-sticky
     position: absolute
     bottom: 0
     left: 0

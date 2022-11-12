@@ -18,6 +18,12 @@ export default {
     '/invites':  wrap({
         asyncComponent: () => import('./views/Invites.svelte')
     }),
+    '/oidc-callback':  wrap({
+        asyncComponent: () => import('./views/OidcCallback.svelte')
+    }),
+    '/silent-renew':  wrap({
+        asyncComponent: () => import('./views/OidcSilentRenew.svelte')
+    }),
     // Catch-all
     // This is optional, but if present it must be the last
     '*':  wrap({

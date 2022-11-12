@@ -1,0 +1,1 @@
+import{S as s,i as n,s as a,ab as i,a7 as o,ac as l}from"./index.e5f15ed8.js";function c(t){return new i(o(l).oidcSettings).signinSilentCallback().catch(e=>{console.log(e)}),[]}class u extends s{constructor(e){super(),n(this,e,c,null,a,{})}}export{u as default};

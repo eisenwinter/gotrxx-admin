@@ -1,0 +1,1 @@
+import{a4 as a}from"./index.8ca1d230.js";const u={error(e,s,r){a.update(t=>(t.messages.push({title:e,body:s,duration:r,type:"danger"}),t))},success(e,s,r){a.update(t=>(t.messages.push({title:e,body:s,duration:r,type:"success"}),t))},notify(e,s,r){a.update(t=>(t.messages.push({title:e,body:s,duration:r}),t))}};export{u as d};

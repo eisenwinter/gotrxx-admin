@@ -1,1 +1,0 @@
-import{S as n,i as s,s as a,ab as i,a7 as l,ac as o}from"./index.8ca1d230.js";function r(t){return new i(l(o).oidcSettings).signinSilentCallback().catch(e=>{console.log("silent renew",e)}),[]}class u extends n{constructor(e){super(),s(this,e,r,null,a,{})}}export{u as default};
